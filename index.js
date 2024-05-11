@@ -47,6 +47,13 @@ async function run() {
       res.send(result);
     });
 
+    app.delete("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await blogsCollection.deleteOne(query);
+      res.send(result);
+    })
+
     //projects
     app.post("/project", async (req, res) => {
       const data = req.body;
@@ -59,17 +66,31 @@ async function run() {
       res.send(result);
     });
 
+    app.delete("/project/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await projectCollection.deleteOne(query);
+      res.send(result);
+    })
+
     //skills
-    app.post("/project", async (req, res) => {
+    app.post("/skill", async (req, res) => {
       const data = req.body;
       const result = await skillsCollection.insertOne(data);
       res.send(result);
     });
 
-    app.get("/projects", async (req, res) => {
+    app.get("/skills", async (req, res) => {
       const result = await skillsCollection.find().toArray();
       res.send(result);
     });
+
+    app.delete("/skill/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await skillsCollection.deleteOne(query);
+      res.send(result);
+    })
 
     // Start the server
     app.listen(port, () => {
