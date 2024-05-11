@@ -47,6 +47,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/blog/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await blogsCollection.findOne(query);
+      res.send(result);
+    })
+
     app.delete("/blog/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -89,6 +96,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/project/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await projectCollection.findOne(query);
+      res.send(result);
+    })
+
     app.delete("/project/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -126,6 +140,13 @@ async function run() {
       const result = await skillsCollection.find().toArray();
       res.send(result);
     });
+
+    app.get('/skill/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await skillsCollection.findOne(query);
+      res.send(result);
+    })
 
     app.delete("/skill/:id", async (req, res) => {
       const id = req.params.id;
