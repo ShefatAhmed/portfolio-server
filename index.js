@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -49,15 +49,38 @@ async function run() {
 
     app.delete("/blog/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
+      const query = { _id: new ObjectId(id) };
       const result = await blogsCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+    app.put("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const { image, title, description } = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateData = {
+        $set: {
+          image,
+          title,
+          description,
+        },
+      };
+      const result = await blogsCollection.updateOne(filter, updateData);
+      res.send(result);
+    });
 
     //projects
     app.post("/project", async (req, res) => {
-      const data = req.body;
-      const result = await projectCollection.insertOne(data);
+      const { title, image, description, technology, gitLink, liveLink } =
+        req.body;
+      const result = await projectCollection.insertOne({
+        title,
+        image,
+        description,
+        technology,
+        gitLink,
+        liveLink,
+      });
       res.send(result);
     });
 
@@ -68,15 +91,34 @@ async function run() {
 
     app.delete("/project/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
+      const query = { _id: new ObjectId(id) };
       const result = await projectCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+    app.put("/project/:id", async (req, res) => {
+      const id = req.params.id;
+      const { title, image, description, technology, gitLink, liveLink } =
+        req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateData = {
+        $set: {
+          title,
+          image,
+          description,
+          technology,
+          gitLink,
+          liveLink,
+        },
+      };
+      const result = await projectCollection.updateOne(filter, updateData);
+      res.send(result);
+    });
 
     //skills
     app.post("/skill", async (req, res) => {
-      const data = req.body;
-      const result = await skillsCollection.insertOne(data);
+      const { skill_name } = req.body;
+      const result = await skillsCollection.insertOne({ skill_name });
       res.send(result);
     });
 
@@ -87,10 +129,23 @@ async function run() {
 
     app.delete("/skill/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
+      const query = { _id: new ObjectId(id) };
       const result = await skillsCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+    app.put("/skill/:id", async (req, res) => {
+      const id = req.params.id;
+      const { skill_name } = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateData = {
+        $set: {
+          skill_name,
+        },
+      };
+      const result = await skillsCollection.updateOne(filter, updateData);
+      res.send(result);
+    });
 
     // Start the server
     app.listen(port, () => {
