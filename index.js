@@ -29,7 +29,6 @@ async function run() {
     const skillsCollection = db.collection("project");
 
     // main code
-
     //blogs
     app.post("/blog", async (req, res) => {
       const { image, title, description } = req.body;
