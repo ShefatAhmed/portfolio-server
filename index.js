@@ -141,30 +141,10 @@ async function run() {
       res.send(result);
     });
 
-    app.get('/skill/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await skillsCollection.findOne(query);
-      res.send(result);
-    })
-
     app.delete("/skill/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await skillsCollection.deleteOne(query);
-      res.send(result);
-    });
-
-    app.put("/skill/:id", async (req, res) => {
-      const id = req.params.id;
-      const { skill_name } = req.body;
-      const filter = { _id: new ObjectId(id) };
-      const updateData = {
-        $set: {
-          skill_name,
-        },
-      };
-      const result = await skillsCollection.updateOne(filter, updateData);
       res.send(result);
     });
 
