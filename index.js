@@ -26,7 +26,7 @@ async function run() {
     const db = client.db("portfolio");
     const blogsCollection = db.collection("blog");
     const projectCollection = db.collection("project");
-    const skillsCollection = db.collection("project");
+    const skillsCollection = db.collection("skill");
 
     // main code
     //blogs
